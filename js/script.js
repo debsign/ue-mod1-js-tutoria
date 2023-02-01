@@ -18,7 +18,7 @@ function addUsersToPage(userList) {
         const user = userList[index];
 
         HTML += `
-        <div class="user" id="user-0">
+        <div class="user" id="user-${user.id}">
             <div>${user.name}</div>
             <div>${user.email}</div>
             <div>${user.id}</div>
@@ -31,6 +31,11 @@ function addUsersToPage(userList) {
 
 function getPostsByUser(userId) {
     document.getElementById("userId").innerHTML = "Posts from user: " + userId;
+
+    var selected = document.getElementsByClassName("selected");
+    if(selected.length > 0) selected[0].classList.remove("selected");
+    document.getElementById(`user-${userId}`).classList.add("selected");
+    
     fetch(`http://jsonplaceholder.typicode.com/posts?userId=${userId}`)
         .then(function(response) { 
             return response.json() 
